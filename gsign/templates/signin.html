@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google OAuth Login with Sign Out</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    {% if messages %}
+    <ul class="messages" style="color:red">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+          {{ message }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+    <div class="container" style="margin:40%; border: 1px solid #ccc; height: 350px; padding: 8px; border-radius: 10px; border-width: 4px">
+        <h2>Fittness <i>C</i>hecker</h2>
+  
+
+      <div class="g_id_signin" onclick="requestAccessToken()" style="display: flex; align-items: center; gap: 8px; border: 1px solid #ccc; padding: 8px; border-radius: 4px; cursor: pointer; margin-top: 80%">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" width="20" height="20">
+            <span>Log in with Google</span>
+          </div>
+
+  </div>
+  
+
+
+  <!-- Sign-Out Button -->
+  <button id="signout-btn" onclick="signOut()" style="display: none;">Sign Out</button>
+
+  <script>
+    
+
+
+    let tokenClient;
+
+window.onload = () => {
+    
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: '368680050758-36kcbvuihqnuiekpl34dnolcudqqgjbi.apps.googleusercontent.com',
+    scope: 'openid email profile https://www.googleapis.com/auth/fitness.activity.read',
+    callback: (tokenResponse) => {
+      console.log("Access Token:", tokenResponse.access_token);
+     // Fetch user info
+     fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: {
+          Authorization: `Bearer ${tokenResponse.access_token}`,
+        },
+      })
+        .then(res => res.json())
+        .then(user => {
+          console.log("Email:", user.email);
+          // Redirect if needed
+          window.location.href = `/google?accessToken=${encodeURIComponent(tokenResponse.access_token)}&email=${encodeURIComponent(user.email)}`;
+        })
+        .catch(err => console.error("Error getting user info", err));
+    
+    },
+  });
+};
+
+function requestAccessToken() {
+  tokenClient.requestAccessToken();
+}
+
+  </script>
+</body>
+</html>

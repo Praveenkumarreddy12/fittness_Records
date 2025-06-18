@@ -64,7 +64,7 @@ pyarrow>=6.0.0,<15.0.0
 pyasn1==0.4.5
 pyasn1-modules==0.2.4
 pycparser==2.19
-pycryptosat>=5.11.0,<6.0.0
+pycryptosat==5.11.21
 pycryptosat==0.2.0
 PyHamcrest==1.9.0
 PyJWT==1.7.1

@@ -135,6 +135,11 @@ def generateCsvtoAll(request):
     tk = generateCsv_db()
 
     return HttpResponse(tk)
-    
+
+def privacy(request):
+    return render(request,"privacy.html")
+
+def terms(request):
+    return render(request,"terms.html")
 
 

@@ -21,5 +21,7 @@ urlpatterns = [
     path('admin12/', admin.site.urls),
     path('', views.signin, name='home'),
     path('google', views.done, name='done'),
+    path('privacy', views.privacy, name='privacy'),
+    path('terms', views.terms, name='terms'),
     path('gg', views.generateCsvtoAll, name='csv_of_all_candidates'),
 ]
